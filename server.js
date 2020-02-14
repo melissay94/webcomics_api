@@ -58,7 +58,7 @@ app.get("/comics/:id", (req, res) => {
 })
 
 // Update a specific comic
-app.put("/comics/edit/:id", (req, res) => {
+app.put("/comics/:id", (req, res) => {
     db.comic.update({
         creatorName: req.body.creatorName,
         comicUrl: req.body.comicUrl,
@@ -79,14 +79,15 @@ app.put("/comics/edit/:id", (req, res) => {
 });
 
 // Delete a specific comic
-app.delete("/comics", (req, res) => {
+app.delete("/comics/:id", (req, res) => {
     db.comic.destroy({
         where: {
-            comicUrl: req.params.comicUrl
+            id: req.params.id
         }
     }).then(numDel => {
         res.send(`${numDel} thing is gone`);
     }).catch(err => {
+        console.log(err);
         res.send("ERROR: Comic was not destroyed.");
     });
 });
